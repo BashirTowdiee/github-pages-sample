@@ -11,12 +11,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Cache version string
-        uses: actions/cache@v3
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+        uses: actions/cache@v2
         with:
           path: version
           key: ${{ runner.os }}-version-${{ hashFiles('version') }}
@@ -24,10 +22,11 @@ jobs:
             ${{ runner.os }}-version-
 
       - name: Store version string
-        env:
-          ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
         id: set-version
-        run: echo "::set-env name=VERSION_STRING::v0.0.1"
+        run: echo "VERSION_STRING=v0.0.1" >> $GITHUB_ENV
+
+      - name: Log environment file
+        run: cat $GITHUB_ENV
 
       - name: Build and deploy
         run: |
