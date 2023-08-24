@@ -16,14 +16,14 @@ jobs:
       - name: Cache version string
         uses: actions/cache@v2
         with:
-          path: ${{ runner.temp }}/version
-          key: ${{ runner.os }}-version-${{ hashFiles(runner.temp + '/version') }}
+          path: version
+          key: ${{ runner.os }}-version-${{ hashFiles('version') }}
           restore-keys: |
             ${{ runner.os }}-version-
 
       - name: Store version string
         id: set-version
-        run: echo "VERSION_STRING=v0.0.1" >> $GITHUB_ENV
+        run: echo "::set-env name=VERSION_STRING::v0.0.1"
 
       - name: Build and deploy
         run: |
