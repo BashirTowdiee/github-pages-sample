@@ -1,0 +1,38 @@
+name: Build, Cache, and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  cache_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Cache version string
+        uses: actions/cache@v2
+        with:
+          path: ${{ runner.temp }}/version
+          key: ${{ runner.os }}-version-${{ hashFiles(runner.temp+'/version') }}
+          restore-keys: |
+            ${{ runner.os }}-version-
+
+      - name: Store version string
+        id: set-version
+        run: echo "::set-env name=VERSION_STRING::v0.0.1"
+
+      - name: Build and deploy
+        run: |
+          mkdir -p public
+          cp index.html public/
+          # You can add additional build or copying steps here
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
