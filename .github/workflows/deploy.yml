@@ -22,7 +22,9 @@ jobs:
             ${{ runner.os }}-version-
 
       - name: Store version string
-        run: echo "VERSION_STRING=v0.0.1" >> $GITHUB_ENV
+        run: |
+          echo "VERSION_STRING=v0.0.1" >> $GITHUB_ENV
+          cat $GITHUB_ENV   # Log the contents of the environment file
 
       - name: Build and deploy
         run: |
