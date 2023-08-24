@@ -17,7 +17,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ runner.temp }}/version
-          key: ${{ runner.os }}-version-${{ hashFiles(runner.temp+'/version') }}
+          key: ${{ runner.os }}-version-${{ hashFiles(runner.temp + '/version') }}
           restore-keys: |
             ${{ runner.os }}-version-
 
