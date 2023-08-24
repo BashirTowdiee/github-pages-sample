@@ -21,10 +21,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-version-
 
-      - name: Store version string
+      - name: create env file
         run: |
-          echo "VERSION_STRING=v0.0.1" >> $GITHUB_ENV
-          cat $GITHUB_ENV   # Log the contents of the environment file
+          touch .env
+          echo "VERSION_STRING=v0.0.1" >> .env
+          cat .env
 
       - name: Build and deploy
         run: |
