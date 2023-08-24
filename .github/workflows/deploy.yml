@@ -23,7 +23,7 @@ jobs:
 
       - name: Store version string
         id: set-version
-        run: echo "::set-env name=VERSION_STRING::v0.0.1"
+        run: echo "::set-output name=VERSION_STRING::v0.0.1"
 
       - name: Build and deploy
         run: |
