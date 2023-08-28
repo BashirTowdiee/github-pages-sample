@@ -30,15 +30,21 @@ jobs:
           cp index.html public/
           # You can add additional build or copying steps here
 
+        # Store the version artifact
+      - name: Upload version artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: version-artifact
+          path: artifacts
+
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
           folder: ./public
 
-      # Store the version artifact
-      - name: Upload version artifact
-        uses: actions/upload-artifact@v2
+      - name: Download version artifact
+        uses: actions/download-artifact@v2
         with:
           name: version-artifact
           path: artifacts
