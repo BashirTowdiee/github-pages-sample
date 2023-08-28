@@ -18,33 +18,32 @@ jobs:
 
       - name: Create version artifact
         run: |
-          mkdir -p artifacts
-          cp version.txt artifacts/
+          mkdir -p site
+          cp version.txt site/
         # Create an artifact containing the version.txt file
         # This artifact can be used in subsequent steps
         # to retrieve the version string
 
       - name: Build and deploy
         run: |
-          mkdir -p public
-          cp index.html public/
+          cp index.html site/
           # You can add additional build or copying steps here
 
         # Store the version artifact
       - name: Upload version artifact
         uses: actions/upload-artifact@v2
         with:
-          name: version-artifact
-          path: artifacts
+          name: site-artifact
+          path: site
 
       - name: Download version artifact
         uses: actions/download-artifact@v2
         with:
-          name: version-artifact
-          path: artifacts
+          name: site-artifact
+          path: site
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
-          folder: ./public
+          folder: ./site
