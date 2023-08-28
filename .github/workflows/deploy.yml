@@ -37,14 +37,14 @@ jobs:
           name: version-artifact
           path: artifacts
 
-      - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@4.1.4
-        with:
-          branch: gh-pages
-          folder: ./public
-
       - name: Download version artifact
         uses: actions/download-artifact@v2
         with:
           name: version-artifact
           path: artifacts
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: ./public
