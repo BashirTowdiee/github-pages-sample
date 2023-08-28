@@ -13,22 +13,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create version artifact
+      - name: Add version to version.txt
         run: echo "v0.0.1" > version.txt
 
-      - name: Cache version string
-        uses: actions/cache@v2
-        with:
-          path: version.txt
-          key: ${{ runner.os }}-version-${{ hashFiles('version.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-version-
-
-      - name: Upload version artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: version-artifact
-          path: version.txt
+      - name: Create version artifact
+        run: |
+          mkdir -p artifacts
+          cp version.txt artifacts/
+        # Create an artifact containing the version.txt file
+        # This artifact can be used in subsequent steps
+        # to retrieve the version string
 
       - name: Build and deploy
         run: |
@@ -41,3 +35,10 @@ jobs:
         with:
           branch: gh-pages
           folder: ./public
+
+      # Store the version artifact
+      - name: Upload version artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: version-artifact
+          path: artifacts
