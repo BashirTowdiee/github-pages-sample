@@ -13,26 +13,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Add version to version.txt
-        run: echo "v0.0.5" > version.txt
-
-      - name: Create version artifact
-        run: |
-          mkdir -p site
-          cp version.txt site/
-
-      - name: Build and deploy
-        run: |
-          cp index.html site/
-
-      - name: Upload version artifact
-        uses: actions/upload-artifact@v2
+      - name: Download version artifact
+        uses: actions/download-artifact@v2
         with:
           name: site-artifact
           path: site
 
-      - name: Download version artifact
-        uses: actions/download-artifact@v2
+      - name: Add version to version.txt
+        run: echo "v0.0.2" >> ./site/version.txt
+
+      # - name: Create version artifact
+      #   run: |
+      #     mkdir -p site
+      #     cp version.txt site/
+
+      # - name: Build and deploy
+      #   run: |
+      #     cp index.html site/
+
+      - name: Upload version artifact
+        uses: actions/upload-artifact@v2
         with:
           name: site-artifact
           path: site
