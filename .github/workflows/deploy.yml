@@ -3,7 +3,7 @@ name: Build, Cache, and Deploy
 on:
   push:
     branches:
-      - version_control
+      - main
 
 jobs:
   cache_and_deploy:
