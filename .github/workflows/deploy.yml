@@ -16,7 +16,7 @@ jobs:
 
       - name: Add version to version.txt
         if: success()
-        run: echo "v0.0.222" > version.txt
+        run: echo "v0.0.22" > version.txt
 
       - name: Create version artifact
         if: success()
