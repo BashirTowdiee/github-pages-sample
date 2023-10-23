@@ -11,12 +11,16 @@ jobs:
 
     steps:
       - name: Checkout repository
+        if: success()
         uses: actions/checkout@v2
 
       - name: Add version to version.txt
-        run: echo "v0.0.62" > version.txt
+        if: success()
+        run: echo "v0.0.64" > version.txt
 
       - name: Create version artifact
+        if: success()
+        id: create-artifact
         run: |
           mkdir -p site
           cp version.txt site/
@@ -28,21 +32,23 @@ jobs:
         run: |
           cp index.html site/
 
-        # Store the version artifact
       - name: Upload version artifact
+        if: success()
         uses: actions/upload-artifact@v2
         with:
           name: site-artifact
           path: site
 
       - name: Download version artifact
+        if: success() # This step depends on the success of the previous step
         uses: actions/download-artifact@v2
         with:
           name: site-artifact
           path: site
 
       - name: Deploy 🚀
+        if: success()
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
-          folder: ./site
+          folder: 'site'
